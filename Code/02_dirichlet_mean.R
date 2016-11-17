@@ -26,7 +26,7 @@ pitcher_hits <- at_bat %>%
 # Only include batters that have at least 50 plate appearances
 batter_pa <- at_bat %>%
   group_by(batter) %>%
-  summarise(pa = n(), obp = mean(on_base), is_pitcher = mean(is_pitcher)) %>%
+  summarise(pa = n(), obp = mean(on_base)) %>%
   filter(pa >= 50)
 
 # Create a Binary Variable detailing whether pitcher
