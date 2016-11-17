@@ -10,7 +10,7 @@ library(dplyr)
 
 # Set Working Directory
 
-my_db <- src_sqlite("pitchRx.sqlite3", create = FALSE)
+my_db <- src_sqlite("Data/pitchRx.sqlite3", create = FALSE)
 
 at_bat <- tbl(my_db, "atbat")
 
@@ -54,7 +54,7 @@ at_bat <- at_bat %>%
 
 at_bat$date <- as.Date(gsub("_", "-", at_bat$date))
 
-write.csv(at_bat, file = "at_bat.csv")
+write.csv(at_bat, file = "Data/at_bat.csv")
     
   
   
