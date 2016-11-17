@@ -26,7 +26,7 @@ length(player_ab)
 # [1] 3153
 
 # First subset the data for speed
-# player_ab <- player_ab[1:30]
+ player_ab <- player_ab[1:10]
 
 
 
@@ -61,7 +61,8 @@ findSmoothedDirichlet <- function(y, gameid, prior, discount = 1){
     outcome <- y[i,]
     c <- which(outcome == 1)
     games.away <- abs(game - gameid)
-    postDirich <- colSums((y * (discount^games.away))[-i,]) + prior * discount^(game - 1)
+    postDirich <- (nrow(y) > 1) * colSums((y * (discount^games.away))[-i,]) +
+      prior * discount^(game - 1)
     postPrec <- sum(postDirich)
     postMean <- postDirich / postPrec
     alpha <- postDirich[c]
