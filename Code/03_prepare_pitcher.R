@@ -26,7 +26,7 @@ length(player_ab)
 # [1] 3153
 
 # First subset the data for speed
- player_ab <- player_ab[1:10]
+# player_ab <- player_ab[[61]]
 
 
 
@@ -87,7 +87,7 @@ player_ab <- lapply(player_ab, function(x){
   y <- cbind(x$outcome == "Out", x$outcome == "Walk",
              x$outcome == "Single", x$outcome == "XBH",
              x$outcome == "Home Run")
-  post_mat <- findSmoothedDirichlet(y, gameid, prior, discount)[["mat"]]
+  post_mat <- matrix(findSmoothedDirichlet(y, gameid, prior, discount)[["mat"]], ncol = 5)
   colnames(post_mat) <- c("out_mean_pitch", "bb_mean_pitch", "single_mean_pitch",
                           "xbh_mean_pitch","hr_mean_pitch")
   new_mat <- cbind(x, post_mat)
