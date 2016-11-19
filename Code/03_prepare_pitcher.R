@@ -30,7 +30,7 @@ length(player_ab)
 # [1] 3153
 
 # First subset the data for speed
- player_ab <- player_ab[1:10]
+# player_ab <- player_ab[1:10]
 
 
 
