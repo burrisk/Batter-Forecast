@@ -20,13 +20,17 @@ empirical.means <- ab %>%
 prior.prec = 100
 prior <- (empirical.means[1:5, 3] * prior.prec)$freq
 
+# Sort by date
+ab <- ab %>%
+  arrange(date, inning, o)
+
 # Split data into separate data sets for each pitcher
 player_ab <- split(ab, ab$pitcher)
 length(player_ab)
 # [1] 3153
 
 # First subset the data for speed
-# player_ab <- player_ab[61:62]
+ player_ab <- player_ab[1:10]
 
 
 
@@ -98,6 +102,8 @@ player_ab <- lapply(player_ab, function(x){
 
 
 ab <- do.call(rbind, player_ab)
+
+
 
 save(ab, file = "Data/at_bat_post_pitch.Rdata")
 

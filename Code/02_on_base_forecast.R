@@ -153,6 +153,7 @@ set.seed(314)
 
 library(MASS)
 library(MCMCpack)
+library(dlm)
 
 y_disc = sapply(1:nrow(y), function(i){
   ab_away = abs(1:nrow(y) - i)
@@ -272,7 +273,7 @@ eta = inits[["eta"]]
 n = nrow(y)
 
 eta_list = list()
-for (i in 1:20){
+for (i in 1:40){
   theta = updateTheta(y = y, eta = eta, W = W, V = V, F_mat = F_mat, H_mat = H_mat, n=n)
   l = updateVar(y=y, eta=eta, F_mat=F_mat, H_mat=H_mat, theta=theta, n=n)
   W = l[["W"]]
@@ -286,7 +287,7 @@ postmean = Reduce("+", eta_list)/length(eta_list)
 outexp = cbind(rep(1,nrow(postmean)),exp(postmean))
 out = outexp/rowSums(outexp)
 
-plot(out[,1], type='l')
+plot(out[,1], type='l', xlab = "Game in Career", ylab = "Out Probability", main = "Bobby Abreu")
 
 # Try some dynamic ordered probit
 # First binary outcomes
