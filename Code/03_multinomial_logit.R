@@ -28,15 +28,15 @@ pa_indians <- ab1 %>%
 
 latest <- as.Date("2016-10-01", format = "%Y-%m-%d")
 
-model.1 <- MCMCmnl(outcome ~ out_mean  +
-                     (p_throws==stand),
-                   data = ab1, baseline = "Out", 
-                   mcmc.method = "slice")
-
-model.2 <- multinom(outcome ~ logit(out_mean) * logit(out_mean_pitch) + 
-                      logit(bb_mean) * logit(bb_mean_pitch) +
-                      logit(xbh_mean) * logit(xbh_mean_pitch) + 
-                      logit(hr_mean) * logit(hr_mean_pitch) + 
+# model.1 <- MCMCmnl(outcome ~ out_mean  +
+#                      (p_throws==stand),
+#                    data = ab1, baseline = "Out", 
+#                    mcmc.method = "slice")
+# 
+model.2 <- multinom(outcome ~  bb_mean + bb_mean_pitch +
+                      single_mean + single_mean_pitch + 
+                      xbh_mean + xbh_mean_pitch + 
+                      hr_mean + hr_mean_pitch + 
                       (p_throws == stand), data = ab)
 
 
@@ -44,15 +44,15 @@ model.2.sum <- summary(model.2)
 
 # Penalized Maximum Likelihood
 library(pmlr)
-model.3 <- multinom(outcome ~ factor(batter)*(p_throws == stand) + out_mean +
-                    out_mean_pitch +
-                    bb_mean +
-                    bb_mean_pitch + 
-                    hr_mean +
-                    hr_mean_pitch, data = ab1, maxiter = 1000)
-
-
-model.3.sum <- summary(model.3)
+# model.3 <- multinom(outcome ~ factor(batter)*(p_throws == stand) + out_mean +
+#                     out_mean_pitch +
+#                     bb_mean +
+#                     bb_mean_pitch + 
+#                     hr_mean +
+#                     hr_mean_pitch, data = ab1, maxiter = 1000)
+# 
+# 
+# model.3.sum <- summary(model.3)
 
 # Get World Series Game 1 Traits
 ws.batters <- ab1 %>%
@@ -116,15 +116,15 @@ dev.off()
 
 
 burnett <- ab %>%
-  filter(pitcher_name %in% c("Miguel Batista")) %>%
+  filter(pitcher_name %in% c("Clayton Kershaw")) %>%
   arrange(date,inning,o)
-#pdf("Output/burnett.pdf")
+pdf("Output/kershaw.pdf")
 ggplot(burnett, aes(x = 1:nrow(burnett), y = out_mean_pitch)) + geom_line(color = "purple") +
   xlab("At-Bat") + 
-  ylab("Mean OBP") +
-  ggtitle("A.J. Burnett") +
+  ylab("Mean Out Rate") +
+  ggtitle("Clayton Kershaw") +
   theme(plot.title = element_text(size=22))
-#dev.off()
+dev.off()
 
 # Plot Home Run probabilities
 pdf("Output/HRProb_g1.pdf")
